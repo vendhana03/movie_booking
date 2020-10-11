@@ -1,3 +1,5 @@
+/lib/resources/constants.dart
+/android/app/google-services.json
 # Miscellaneous
 *.class
 *.log
@@ -41,5 +43,3 @@ app.*.map.json
 
 # Exceptions to above rules.
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
-/lib/resources/constants.dart
-/android/app/google-services.json

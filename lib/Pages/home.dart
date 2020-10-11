@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:moviebooking/Pages/bookseats.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../model/movie.dart';
@@ -56,54 +57,61 @@ class _HomeScreenState extends State<HomeScreen> {
         .size
         .width;
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.exit_to_app,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              setState(() {
-                _load = true;
-              });
-              logout();
-            },
-          )
-        ],
-      ),
-    body: SingleChildScrollView(
-    physics: ScrollPhysics(),
-    child: Column(
-    children: [
-    Card(
-    child: TextField(
-    decoration: InputDecoration(
-    prefixIcon: Icon(Icons.search), hintText: 'Search...'),
-    onChanged: (val) {
-    setState(() {
-    searchString = val;
-    });
-    },
-    ),
-    ),
-    FutureBuilder<List<Movie>>(
-    future: fetchMovies(new http.Client()),
-    builder: (context, snapshot) {
-    if (snapshot.hasError) print(snapshot.error);
-    if(!snapshot.hasData){
-    return new Center(child: new CircularProgressIndicator());
-    } else {
-    List<Movie> _suggestionList = (searchString == '' || searchString == null) ? snapshot.data
-        : snapshot.data.where((element) => element.title.toLowerCase().contains(searchString.toLowerCase())).toList();
-    return _buildList(context, _suggestionList);
-    }
-    },
-    ),
-    ],
-    )
-    )
+        appBar: AppBar(
+          title: Text('Home'),
+          actions: <Widget>[
+            (_email != null) ? IconButton(
+              icon: Icon(
+                Icons.exit_to_app,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                setState(() {
+                  _load = true;
+                });
+                logout();
+              },
+            ) : IconButton(
+              icon: Icon(
+                Icons.add_to_queue,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.of(context).pushReplacementNamed('login');
+              },
+            )
+          ],
+        ),
+        body: SingleChildScrollView(
+            physics: ScrollPhysics(),
+            child: Column(
+              children: [
+                Card(
+                  child: TextField(
+                    decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.search), hintText: 'Search...'),
+                    onChanged: (val) {
+                      setState(() {
+                        searchString = val;
+                      });
+                    },
+                  ),
+                ),
+                FutureBuilder<List<Movie>>(
+                  future: fetchMovies(new http.Client()),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) print(snapshot.error);
+                    if(!snapshot.hasData){
+                      return new Center(child: new CircularProgressIndicator());
+                    } else {
+                      List<Movie> _suggestionList = (searchString == '' || searchString == null) ? snapshot.data
+                          : snapshot.data.where((element) => element.title.toLowerCase().contains(searchString.toLowerCase())).toList();
+                      return _buildList(context, _suggestionList);
+                    }
+                  },
+                ),
+              ],)
+        )
     );
   }
 
@@ -116,7 +124,11 @@ class _HomeScreenState extends State<HomeScreen> {
           return Card(
               child: InkWell(
                 onTap: () {
-
+                  (_email != null)? Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => BookSeats(movies[int].title)),
+                  )
+                      : Navigator.of(context).pushNamed('login');
                 },
                 child: Row(
                   children: [
