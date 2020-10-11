@@ -1,16 +1,23 @@
 # moviebooking
 
-A new Flutter application.
+A Flutter app for viewing a list of movies(current trending) as a guest user and a seating arrangement layout with seat numbers to select and book tickets.
+
+Guest user roles - can view list of movies
+Logged in user - can view list of movies, view & select seating layout and make a booking.
+
+## Modules Completed
+
+1. Signup
+2. Login
+3. Forgot Password
+4. Guest user
+5. Movies list (from developers.themoviedb.org)
+6. Seating layout
+7. Book tickets
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+1. Clone the repository using "git clone URL"
+2. Install all dependencies using "pub get"
+3. Connect a device or emulator and run the project
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
